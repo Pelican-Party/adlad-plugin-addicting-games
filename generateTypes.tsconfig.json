@@ -1,0 +1,15 @@
+{
+	"extends": "./.denoTypes/tsconfig.json",
+	"compilerOptions": {
+		"target": "esnext",
+		"checkJs": true,
+		"module": "esnext",
+		"strict": true,
+		"declaration": true,
+		"emitDeclarationOnly": true
+	},
+	"files": ["mod.js"],
+	"include": [
+		"src/types.d.ts"
+	]
+}

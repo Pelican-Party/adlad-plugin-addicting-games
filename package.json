@@ -1,0 +1,22 @@
+{
+	"name": "@adlad/plugin-addicting-games",
+	"version": "0.1.0",
+	"description": "AdLad plugin for the Addicting Games swag api.",
+	"main": "mod.js",
+	"types": "dist/adlad-plugin-addicting-games.d.ts",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Pelican-Party/adlad-plugin-addicting-games.git"
+	},
+	"keywords": [
+		"ads",
+		"addictinggames",
+		"swag"
+	],
+	"author": "Pelican Party Studios",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/Pelican-Party/adlad-plugin-addicting-games/issues"
+	},
+	"homepage": "https://github.com/Pelican-Party/adlad-plugin-addicting-games"
+}

@@ -10,7 +10,8 @@ export function addictingGamesPlugin({
 	/** @type {SWAGAPI} */
 	let apiInstance;
 
-	const plugin = /** @type {const} @satisfies {import("$adlad").AdLadPlugin} */ ({
+	/** @satisfies {import("$adlad").AdLadPlugin} */
+	const plugin = /** @type {const} */ ({
 		name: "addictinggames",
 		async initialize(ctx) {
 			if (initializeCalled) {

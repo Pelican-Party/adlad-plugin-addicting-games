@@ -46,23 +46,20 @@ const command = new Deno.Command(Deno.execPath(), {
 		"--allow-env",
 		"--allow-read",
 		"--allow-write",
-		"npm:typescript@5.4.3/tsc",
+		"npm:typescript@4.9.5/tsc",
 		"-p",
 		"./generateTypes.tsconfig.json",
 		"--outDir",
 		tmpDir,
 	],
-
-	// tsc emits a whooole bunch of type errors that we are just going to ignore
-	// because deno test already does type checking for us
-	stderr: "null",
-	stdout: "null",
 });
 
-const output = await command.output();
-if (!output.success) {
-	Deno.exit(1);
-}
+// Normally we would check if the process succeeded,
+// but tsc emits a whooole bunch of type errors that we are just going to ignore
+// because deno test already does type checking for us.
+// If something still goes wrong at this point, the .d.ts file likely won't get created
+// and so an error will be thrown while trying to copy it.
+await command.output();
 
 await Deno.copyFile(path.resolve(tmpDir, "src/mod.d.ts"), path.resolve("dist/adlad-plugin-addicting-games.d.ts"));
 

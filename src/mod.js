@@ -1,9 +1,11 @@
 /**
  * @param {Object} options
  * @param {string} options.apiKey
+ * @param {boolean} [options.adsEnabled]
  */
 export function addictingGamesPlugin({
 	apiKey,
+	adsEnabled = true,
 }) {
 	let initializeCalled = false;
 
@@ -44,7 +46,22 @@ export function addictingGamesPlugin({
 				debug: ctx.useTestAds,
 				theme: "shockwave",
 			});
+			let warningTimeout;
+			if (location.hostname == "localhost" || location.hostname == "127.0.0.1") {
+				warningTimeout = setTimeout(() => {
+					const visitUrl = new URL(location.href);
+					visitUrl.host = "local.shockwave.com";
+					console.warn(
+						`Addicting games plugin initialization timed out. For local development please add the following to your hosts file:
+
+	127.0.0.1	local.shockwave.com
+
+Then visit ${visitUrl.href} in your browser.`,
+					);
+				}, 3_000);
+			}
 			await apiInstance.startSession();
+			clearTimeout(warningTimeout);
 		},
 		async gameplayStart() {
 			await apiInstance.startGame();
@@ -52,13 +69,15 @@ export function addictingGamesPlugin({
 		async gameplayStop() {
 			await apiInstance.endGame();
 		},
-		async showFullScreenAd() {
-			await apiInstance.showAd();
-			return {
-				didShowAd: null,
-				errorReason: null,
-			};
-		},
+		showFullScreenAd: adsEnabled
+			? async function () {
+				await apiInstance.showAd();
+				return {
+					didShowAd: null,
+					errorReason: null,
+				};
+			}
+			: undefined,
 	});
 
 	return plugin;
